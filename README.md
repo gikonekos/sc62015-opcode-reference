@@ -1,114 +1,49 @@
 # SC62015 Opcode Reference
 
-Reference repository for reconstructed **SC62015** opcodes, registers, and addressing modes.
+A reference repository for reconstructed **SC62015** opcodes, registers, and addressing modes, based on verified readings from original printed materials.
 
-The **SC62015** is the CPU used in SHARP pocket computers such as the **PC-E500** series.  
-This repository is intended as a clean reference for opcode and instruction table reconstruction work based on historical printed materials.
+## Status
 
----
+This repository is currently being prepared.
 
-## Purpose
+The final opcode tables are **not yet published here**.
+They will be added after full verification is completed.
 
-This repository organizes reconstructed reference data for the SC62015 instruction set, including:
+## Scope
+
+This project is intended to document:
 
 - opcode tables
 - register classes
 - addressing modes
 - instruction summaries
-- verification notes where needed
+- notes on reconstruction methodology
 
-The goal is to preserve the results in a simple and reusable form.
+## Source policy
 
----
+This repository follows a strict source policy:
 
-## Scope
+- primary printed source expressions are respected as much as possible
+- no speculative notation is introduced
+- if a reading is unclear, it is marked as unresolved rather than guessed
+- reconstructed tables are separated from working notes whenever possible
 
-This repository focuses on the **final reconstructed reference data**.
+## Planned contents
 
-It is **not** intended to preserve all intermediate working files such as:
-
-- raw scans
-- temporary OCR output
-- draft comparison files
-- step-by-step reconstruction scratch files
-
-Those materials were useful during analysis, but they are not required for ordinary reference use.
-
----
-
-## Source Basis
-
-The reconstruction is based on historical printed documentation related to the SC62015 instruction set.
-
-Because this repository is based on printed source material and manual reconstruction, users should keep the following in mind:
-
-- transcription or interpretation errors may still remain
-- some entries may have been difficult to read in the source material
-- this repository is a reconstruction/reference project, not an official vendor document
-
-Where uncertainty exists, it should be stated explicitly rather than hidden.
-
----
-
-## Files
-
-Typical contents of this repository may include:
-
-- reconstructed opcode tables
-- register reference tables
-- addressing-mode notes
-- instruction reference text files
-- README files in English and Japanese
-
-Only final reference-oriented files should be kept here.
-
----
-
-## Editorial Policy
-
-This repository follows a simple policy:
-
-- do not invent missing data
-- do not silently normalize unclear source text
-- if something cannot be read confidently, mark it as uncertain
-- keep the published structure stable once organized
-
-The emphasis is on clarity and traceability rather than over-expansion.
-
----
-
-## Intended Audience
-
-This repository may be useful for:
-
-- retro computing researchers
-- SHARP pocket computer users
-- reverse engineering and preservation projects
-- assembler/disassembler development
-- historical CPU documentation work
-
----
+- `README.md` — English overview
+- `README-ja.md` — Japanese overview
+- `docs/methodology.md` — reconstruction policy and method
+- `docs/methodology-ja.md` — reconstruction policy and method in Japanese
+- opcode reference files — to be added after verification
 
 ## Notes
 
-This is a historical and technical reference repository.  
-It is not affiliated with SHARP or the original publisher of the printed materials.
+This repository is focused on producing a **clean final reference** rather than preserving every intermediate working file.
 
-If errors are found, corrections based on better evidence are welcome.
+Some intermediate reconstruction steps depended on temporary scan review conditions and are therefore intentionally excluded from the public repository.
 
----
+## License
 
-## Copyright and Use
+Unless otherwise stated, original historical source materials are **not redistributed as free-content material** by this repository.
 
-Please respect the copyright status of the original printed materials.
-
-This repository is intended to preserve **reconstructed reference information**.  
-If original page images or quoted material are added in the future, they should be handled carefully and only to the extent appropriate for documentation and research purposes.
-
----
-
-## Japanese Version
-
-For the Japanese version of this README, see:
-
-- `README-ja.md`
+Only newly written reference texts and reconstruction notes in this repository are covered by the repository license.
