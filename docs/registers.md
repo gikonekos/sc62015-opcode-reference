@@ -1,103 +1,44 @@
 # Registers
 
-This document summarizes the register classes used by the **SC62015** instruction set.
+> Source: primary printed material, p.66–p.67
 
-## Overview
+## Register List
 
-The SC62015 uses several registers of different sizes.
+The SC62015 has the following registers.
 
-In the reconstructed instruction notation, registers are commonly grouped into classes such as:
+| Symbol | Opcode value | Binary | Size | Description |
+|--------|-------------|--------|------|-------------|
+| A  | 0 | 000 | 8-bit | Accumulator (also the high byte of the B register) |
+| IL | 1 | 001 | 8-bit | Low byte of the I register |
+| BA | 2 | 010 | 16-bit | 2-byte register: B (high) + A (low) |
+| I  | 3 | 011 | 16-bit | Loop counter / general purpose (IL + IH) |
+| X  | 4 | 100 | 20-bit | Index register (XL + XH + XX) |
+| Y  | 5 | 101 | 20-bit | Index register (YL + YH + YX) |
+| U  | 6 | 110 | 20-bit | User stack pointer (UL + UH + UX) |
+| S  | 7 | 111 | 20-bit | System stack pointer (SL + SH + SX) |
 
-- `r1`
-- `r2`
-- `r3`
-- `r4`
-- `r`
+## Register Classes
 
-These class symbols are used in opcode tables to describe which registers are valid for a given instruction form.
+The following class symbols are used in the instruction tables.
 
-## Register set
+| Symbol | Registers included |
+|--------|--------------------|
+| r  | A, IL, BA, I, X, Y, U, S (all registers) |
+| r1 | A, IL (8-bit) |
+| r2 | BA, I (16-bit) |
+| r3 | X, Y, U, S (20-bit) |
+| r4 | X, Y, U, S (same as r3) |
 
-Based on the source material, the register table is:
+## Notes
 
-| Register | Opcode value | Binary |
-|---|---:|---:|
-| A  | 0 | 000 |
-| IL | 1 | 001 |
-| BA | 2 | 010 |
-| I  | 3 | 011 |
-| X  | 4 | 100 |
-| Y  | 5 | 101 |
-| U  | 6 | 110 |
-| S  | 7 | 111 |
+- **Writing to IL also clears IH to 0** (IH is automatically zeroed)
+- **The I register** is used as a loop counter. When I = 0, the loop executes 10000h (65536) times
+- **F (Flags)** can be pushed or popped only with PUSHS / POPS / PUSHU / POPU instructions
+- **IMR** (Interrupt Mask Register) corresponds to address FBh in internal RAM
 
-## Register classes
+## Flags
 
-## `r1`
-
-`r1` is the 1-byte register class.
-
-- `A`
-
-## `r2`
-
-`r2` is the 2-byte register class.
-
-- `IL`
-- `BA`
-- `I`
-
-## `r3`
-
-`r3` is the main 20-bit register class used in many external-memory addressing forms.
-
-- `X`
-- `Y`
-- `U`
-- `S`
-
-## `r4`
-
-In the printed register table, `r4` appears as a restricted subclass used under `r3`.
-
-In practice, the printed diagram groups:
-
-- `Y`
-- `U`
-
-under `r4`
-
-This distinction should be preserved as source notation, even if some later working notes simplify it.
-
-## `r`
-
-`r` is the general register selector used in opcode descriptions.
-
-It covers the full register table:
-
-- `A`
-- `IL`
-- `BA`
-- `I`
-- `X`
-- `Y`
-- `U`
-- `S`
-
-## Notes on notation
-
-The source material uses register class notation as part of opcode formulas.
-
-Examples:
-
-- `(08 + r)`
-- `0 r r'`
-- `0000 1 r`
-
-These are not separate mnemonics. They are compact ways to express opcode generation rules.
-
-## Caution
-
-This document follows the notation of the printed source material as closely as possible.
-
-It does **not** attempt to normalize the register classes into a more modern or simplified notation when the original distinction may matter for opcode interpretation.
+| Flag | Description |
+|------|-------------|
+| Z | Zero flag. Set to 1 when the result is 0, otherwise 0 |
+| C | Carry flag. Set to 1 when a carry or borrow occurs, otherwise 0 |
