@@ -33,7 +33,7 @@ This repository follows a strict source policy:
 - `README.md` — English overview
 - `README-ja.md` — Japanese overview
 - `docs/methodology.md` — reconstruction policy and method
-- `docs/methodology-ja.md` — reconstruction policy and method in Japanese
+- `docs/ja/methodology-ja.md` — reconstruction policy and method in Japanese
 - opcode reference files — to be added after verification
 
 ## Notes
