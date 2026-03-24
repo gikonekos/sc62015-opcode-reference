@@ -34,7 +34,7 @@
 - `README.md` — 英語概要
 - `README-ja.md` — 日本語概要
 - `docs/methodology.md` — 再構築方針と方法
-- `docs/methodology-ja.md` — 再構築方針と方法（日本語）
+- `docs/ja/methodology-ja.md` — 再構築方針と方法（日本語）
 - オペコード参照ファイル — 検証完了後に追加予定
 
 ## 注記
