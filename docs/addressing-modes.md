@@ -1,138 +1,73 @@
 # Addressing Modes
 
-This document summarizes the addressing forms used in the reconstructed **SC62015** instruction descriptions.
+> Source: primary printed material, p.65–p.72
 
-## Basic distinction
+## Data Size
 
-The source material distinguishes clearly between:
+The SC62015 handles 1, 2, or 3 bytes of data at a time.
+For registers: 1 byte (A/IL), 2 bytes (BA/I), or 2.5 bytes / 20-bit (X/Y/U/S).
 
-- **internal RAM operands**
-- **external memory operands**
+When only internal RAM or external memory is accessed (without a register operand),
+the data size must be specified explicitly in the mnemonic.
 
-These are written differently and should not be mixed.
+| Mnemonic suffix | Size |
+|-----------------|------|
+| MV (no suffix)  | 1 byte |
+| MVW             | 2 bytes |
+| MVP             | 3 bytes |
+| MVL             | I register bytes (loop) |
 
-## Internal RAM notation
+## Internal RAM Addressing
 
-Internal RAM operands are written with parentheses.
+The SC62015 has 256 bytes of internal RAM.
+When an operand is written as `(n)`, one of four addressing modes can be selected.
 
-Typical forms include:
+| Mode | Effective address | Description |
+|------|-------------------|-------------|
+| ❶ (n)      | address n (absolute) | Directly specifies address n in internal RAM |
+| ❷ (BP+n)   | BP + n | Relative to the base pointer |
+| ❸ (PX+n) / (PY+n) | PX (or PY) + n | Relative to PX or PY pointer |
+| ❹ (BP+PX) / (BP+PY) | BP + PX (or PY) | Base pointer + pointer |
 
-- `(n)`
-- `(BP+n)`
-- `(PX+n)`
-- `(PY+n)`
-- `(BP+PX)`
-- `(BP+PY)`
+- **BP** (Base Pointer): address ECh in internal RAM
+- **PX** (PX Pointer): address EDh in internal RAM
+- **PY** (PY Pointer): address EEh in internal RAM
 
-The exact interpretation depends on the prebyte placed before the instruction.
+The mode is selected by a **prebyte** placed immediately before the instruction (see `prebyte.md`).
 
-## Prebyte and internal RAM addressing
+## External Memory Addressing
 
-For internal RAM addressing, a **prebyte** may be required.
+Addresses in external memory space are written enclosed in `[` and `]`.
+There are 7 addressing modes.
 
-The prebyte determines how `(n)` should be interpreted, such as:
+| Notation | Description |
+|----------|-------------|
+| `[lmn]`   | 20-bit absolute address (l is the upper 4 bits) |
+| `[r3]`    | Value of r3 register used as effective address |
+| `[r3+n]`  | r3 + n as effective address |
+| `[r3++]`  | Execute using r3, then r3 += data size |
+| `[--r3]`  | r3 -= data size, then execute using r3 |
+| `[(n)]`   | 3-byte value at internal RAM address n used as effective address |
+| `[(m)±n]` | 3-byte value at internal RAM address m ± n used as effective address |
 
-- absolute internal RAM address
-- BP-relative form
-- PX/PY-relative form
-- combined base-plus-pointer form
+Valid r3 registers are **X, Y, U, S** only.
 
-This is an important part of SC62015 notation and should be preserved exactly as shown in the source tables.
+## Operand Notation Summary
 
-## External memory notation
+| Notation | Meaning |
+|----------|---------|
+| `n`       | 8-bit immediate value |
+| `mn`      | 16-bit immediate value (n = low byte, m = high byte) |
+| `lmn`     | 20-bit immediate value (n = lowest byte, l = highest byte) |
+| `(n)`     | Internal RAM address n |
+| `(m),(n)` | Both operands are internal RAM addresses |
+| `[lmn]`   | External memory absolute address (20-bit) |
+| `[r3]`    | Register indirect |
+| `[(n)]`   | Internal RAM indirect |
 
-External memory operands are written with square brackets.
+## Loop Instructions
 
-Typical forms include:
-
-- `[lmn]`
-- `[r3]`
-- `[r3+n]`
-- `[r3++]`
-- `[--r3]`
-- `[(n)]`
-- `[(m)±n]`
-
-These forms represent different external-memory addressing modes.
-
-## Main external-memory forms
-
-## 1. Absolute address
-
-- `[lmn]`
-
-This directly specifies a 20-bit address.
-
-## 2. Register indirect
-
-- `[r3]`
-
-The address is taken from an `r3` register.
-
-## 3. Register indirect with offset
-
-- `[r3+n]`
-- `[r3-n]`
-
-The effective address is the value of `r3` plus or minus an offset.
-
-## 4. Post-increment
-
-- `[r3++]`
-
-The access uses the current `r3` address, then increments the register by the data size used by the instruction.
-
-## 5. Pre-decrement
-
-- `[--r3]`
-
-The register is decremented by the data size first, and the resulting address is used for the access.
-
-## 6. Internal-RAM indirect
-
-- `[(n)]`
-
-A 20-bit address is formed from internal RAM contents and then used as an external-memory address.
-
-## 7. Internal-RAM indirect with offset
-
-- `[(m)+n]`
-- `[(m)-n]`
-
-A 20-bit address is formed from internal RAM contents, then adjusted by an offset.
-
-## Data size and mnemonic form
-
-The SC62015 distinguishes transfer size not only by operands, but also by mnemonic family.
-
-Typical examples:
-
-- `MV`   : 1-byte transfer
-- `MVW`  : 2-byte transfer
-- `MVP`  : 3-byte transfer
-- `MVL`  : loop transfer
-- `MVLD` : reverse-direction loop transfer
-
-This is especially important when both operands are memory-like expressions and size cannot be inferred from a register alone.
-
-## Editorial policy
-
-This document preserves source-style notation.
-
-It does not rewrite:
-
-- `(n)` into a modern pseudo-syntax
-- `[r3++]` into another assembler dialect
-- internal/external operands into a unified invented notation
-
-## Caution
-
-Some addressing forms may look similar while belonging to different decoding families.
-
-For example:
-
-- `(n)` and `[(n)]`
-- `[r3]` and `[r3+n]`
-- `[r3++]` and `[--r3]`
-
-must be treated as distinct forms.
+Instructions whose mnemonic ends in `L` (MVL, ADCL, SBCL, EXL, etc.) are loop instructions.
+They repeat execution for the number of times specified by the I register.
+When I = 0, execution is treated as 10000h (65536) times.
+After execution, the I register is set to 0.
