@@ -14,6 +14,7 @@
 https://toro.d.dooo.jp/sle500.html
 
 この表示例で使用しているプログラム: TORO／高橋良和様 作 COMPO-System
+
 Copyright (c) 1997-2026 TORO／高橋良和
 
 ---
