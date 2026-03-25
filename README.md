@@ -8,7 +8,13 @@ This repository is a **conservative reconstruction reference**, **not** an **off
 
 ![PLAY3 reverse engineering on a real SHARP PC-E550](img/play3-reverse-engineering-pc-e550.jpg)
 
-*PLAY3 reverse engineering on a real SHARP PC-E550, shown here as a practical use case for the SC62015 opcode reference.*
+*PLAY3 reverse engineering on a real SHARP PC-E550, using TORO's COMPO-System as a practical environment for SC62015 analysis.*
+
+Source page:
+https://toro.d.dooo.jp/sle500.html
+
+Program used in this example: COMPO-System by TORO / Yoshikazu Takahashi.
+Copyright (c) 1997-2026 TORO / Yoshikazu Takahashi.
 
 ---
 
