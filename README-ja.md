@@ -8,7 +8,13 @@
 
 ![SHARP PC-E550 実機での PLAY3 逆アセンブル表示例](img/play3-reverse-engineering-pc-e550.jpg)
 
-*SHARP PC-E550 実機での PLAY3 逆アセンブル表示例です。SC62015 オペコードリファレンスの実用例として掲載しています。*
+*SHARP PC-E550 実機での PLAY3 逆アセンブル表示例です。TORO様の COMPO-System を用いた、SC62015 オペコードリファレンスの実用例として掲載しています。*
+
+掲載元:
+https://toro.d.dooo.jp/sle500.html
+
+この表示例で使用しているプログラム: TORO／高橋良和様 作 COMPO-System
+Copyright (c) 1997-2026 TORO／高橋良和
 
 ---
 
