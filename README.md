@@ -4,7 +4,7 @@ A reference repository for reconstructed **SC62015** opcodes, registers, address
 
 The **SC62015** is the CPU used in SHARP pocket computers such as the **PC-E500** series.
 
-This repository is a **conservative reconstruction reference**, **not** an **official vendor documen**t and **not** a **final authority**.
+This repository is a **conservative reconstruction reference**, **not** an **official vendor document** and **not** a **final authority**.
 
 ---
 
