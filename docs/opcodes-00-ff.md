@@ -1,6 +1,6 @@
 # SC62015 Opcode Table 00h–FFh
 
-**Version:** v5_C  
+**Version:** v6_C  
 **Primary source:** *PC-E650/PC-U6000 活用研究* (PC-E650/PC-U6000 Practical Guide), I/O Editorial Department, Kogakusha, November 25, 1995, ISBN 4-87593-206-5
 
 ---
@@ -135,7 +135,7 @@
 | 53h | CONFIRMED | ADC | (n), A | 2 | 4 | p.85, p.227 "53h" |
 | 54h | CONFIRMED | ADCL | (m), (n) | 3 | 5+2×I | p.86, p.228 "0101 0100 = 54h / bytes:3 / cycles:5+2×I" |
 | 55h | CONFIRMED | ADCL | (n), A | 2 | 4+I | p.86, p.228 "55h / bytes:2 / cycles:4+I" |
-| 56h | PARTIAL | MVL | (m), [r3±n] | 4 | 5+2×I | p.230 "56h / bytes:4 / cycles:5+2×I". p.231 enlarged confirms MVL (m),(r3+n) form exists. Discrepancy between p.230 and p.231 notation unresolved |
+| 56h | CONFIRMED | MVL | (m), [r3±n] | 4 | 5+2×I | p.230 "0101 0110 = 56h / bytes:4 / cycles:5+2×I". operands=m, n. p.230 enlarged photo direct read; cross-checked with independent analysis, results agree |
 | 57h | CONFIRMED | PMDF | (n), A | 2 | 4 | p.88, p.230 "57h / bytes:2 / cycles:4" |
 | 58h | CONFIRMED | SBC | A, n | 2 | 3 | p.85, p.227 "58h / bytes:2 / cycles:3" |
 | 59h | CONFIRMED | SBC | (m), n | 3 | 4 | p.85, p.227 "59h" |
@@ -143,7 +143,7 @@
 | 5Bh | CONFIRMED | SBC | (n), A | 2 | 4 | p.227 "5Bh" |
 | 5Ch | CONFIRMED | SBCL | (m), (n) | 3 | 5+2×I | p.86, p.228 "5Ch / bytes:3 / cycles:5+2×I" |
 | 5Dh | CONFIRMED | SBCL | (n), A | 2 | 4+I | p.86, p.228 "5Dh / bytes:2 / cycles:4+I" |
-| 5Eh | PARTIAL | MVL | [r3±m], (n) | 4 | 5+2×I | p.230 "5Eh / bytes:4 / cycles:5+2×I". p.231 enlarged confirms MVL [r3++],(n) form exists. Discrepancy between p.230 and p.231 notation unresolved |
+| 5Eh | CONFIRMED | MVL | [r3±m], (n) | 4 | 5+2×I | p.230 "0101 1110 = 5Eh / bytes:4 / cycles:5+2×I". operands=n, m. p.230 enlarged photo direct read; cross-checked with independent analysis, results agree |
 | 5Fh | CONFIRMED | POPS | F | 1 | 2 | p.230 "0101 1111 = 5Fh / bytes:1 / cycles:2". C,Z←(S) S←S+1 |
 | 60h | CONFIRMED | CMP | A, n | 2 | 3 | p.89, p.229 "0110 0000 = 60h / bytes:2 / cycles:3" |
 | 61h | CONFIRMED | CMP | (m), n | 3 | 4 | p.89, p.229 "61h / bytes:3 / cycles:4" |
@@ -279,14 +279,14 @@
 | D5h | CONFIRMED | DSBL | (n), A | 2 | 4+I | p.87 "C5(D5) n" — parenthesized value = DSBL. p.228 "1101 0101 = D5h / bytes:2 / cycles:4+I" |
 | D6h | CONFIRMED | CMPW | (m), r2 | 3 | 7 | p.89 "D6 0r2 n". p.230 "1101 0110 = D6h / bytes:3 / cycles:7". Second byte=0r2 |
 | D7h | CONFIRMED | CMPP | (m), r3 | 3 | 9 | p.89 "D7 0r3 n". p.230 "1101 0111 = D7h / bytes:3 / cycles:9". Second byte=0r3 |
-| D8h | CONFIRMED | MV | [klm], (n) | 5 | 6 | p.75 ❻ "DS(D9,DA) m l k n". p.226 "1101 1000 = D8h / bytes:5 / cycles:6" |
+| D8h | CONFIRMED | MV | [klm], (n) | 5 | 6 | p.75 ❻ "D8(D9,DA) m l k n". p.226 "1101 1000 = D8h / bytes:5 / cycles:6" |
 | D9h | CONFIRMED | MVW | [klm], (n) | 5 | 7 | p.75 ❻ "D9h=MVW". p.226 "1101 1001 = D9h / bytes:5 / cycles:7" |
 | DAh | CONFIRMED | MVP | [klm], (n) | 5 | 8 | p.75 ❻ "DAh=MVP". p.226 "1101 1010 = DAh / bytes:5 / cycles:8" |
 | DBh | CONFIRMED | MVL | [klm], (n) | 5 | 6+2×I | p.77 ❻ "DB m l k n". p.226 "1101 1011 = DBh / bytes:5 / cycles:6+2×I" |
 | DCh | CONFIRMED | MVP | (k), lmn | 5 | 5 | p.73 ❶ "DC k n m l". p.230 "1101 1100 = DCh / bytes:5 / cycles:5" |
 | DDh | CONFIRMED | EX | A, B | 1 | 3 | p.80 "EX A,B → DD". p.227 "1101 1101 = DDh / bytes:1 / cycles:3" |
 | DEh | CONFIRMED | HALT | - | 1 | 1 | p.102 "DE" direct read. p.231 H=D,L=E "HALT" confirmed. p.230 enlarged also reads DEh=HALT / bytes:1 / cycles:1 |
-| DFh | PARTIAL | OFF | - | 1 | unreadable | p.102 "DF" direct read. p.230 enlarged "1101 1111 = DFh / bytes:1" direct read. Cycles column shows only a symbol ("ʻ") — not readable as a number (confirmed across multiple d2_pages photos) |
+| DFh | PARTIAL | OFF | - | 1 | 〃 | p.102 "DF" direct read. p.230 enlarged "1101 1111 = DFh / bytes:1" direct read. cycles column shows "〃" (ditto mark), referring to HALT (DEh) cycles="通過時2" on the row immediately above. p.102 individual instruction page has no cycles entry. Ditto inheritance likely but requires interpretation; PARTIAL maintained |
 | E0h | CONFIRMED | MV | (n), [r3] | 3 | 6 | p.75 ❻ "E0(E1,E2) 0r3 n". p.226 "1110 0000 = E0h / bytes:3 / cycles:6". Second byte=0r3 |
 | E1h | CONFIRMED | MVW | (n), [r3] | 3 | 7 | p.75 ❻ "E1h=MVW". p.226 "1110 0001 = E1h / bytes:3 / cycles:7" |
 | E2h | CONFIRMED | MVP | (n), [r3] | 3 | 8 | p.75 ❻ "E2h=MVP". p.226 "1110 0010 = E2h / bytes:3 / cycles:8" |
@@ -317,8 +317,8 @@
 | FBh | CONFIRMED | MVL | [(l)±m], (n) | 5 | 12+2×I | p.77 ❻ "FB C0 l n m etc.". p.226 "1111 1011 = FBh / bytes:5 / cycles:12+2×I" |
 | FCh | CONFIRMED | DSRL | (n) | 2 | 4+1 | p.94 "FC(EC) n" — leading value = DSRL. p.229 "1111 1100 = FCh / bytes:2 / cycles:4+1" |
 | FDh | CONFIRMED | MV | r2, r2' / r3, r3' | 2 | 2 | p.73 ❷ "MV r2,r2' → FD r2r2' / MV r3,r3' → FD r3r3'" direct read. p.227 "1111 1101 = FDh / bytes:2 / cycles:2" direct read. Second byte = r r' (4 bits each) |
-| FEh | PARTIAL | IR | - | 1 | unreadable | p.102 "FE" direct read. p.230 "1111 1110 = FEh / bytes:1" direct read. cycles unreadable in p.230 |
-| FFh | PARTIAL | RESET | - | 1 | unreadable | p.103 "FF" direct read. FFh confirmed via p.103. cycles unreadable in p.230 |
+| FEh | PARTIAL | IR | - | 1 | not documented | p.102 "FE" direct read. p.230 "1111 1110 = FEh / bytes:1" direct read. p.102 individual instruction page has no cycles entry. cycles not found in instruction table |
+| FFh | PARTIAL | RESET | - | 1 | not documented | p.103 "FF" direct read. FFh confirmed via p.103. p.103 individual instruction page has no cycles entry. cycles not found in instruction table |
 
 ---
 
@@ -327,8 +327,8 @@
 | Category | Count |
 |----------|-------|
 | Total entries | 256 (00h–FFh, all) |
-| CONFIRMED | 247 |
-| PARTIAL | 9 (44h, 4Ch, 56h, 5Eh, 6Ch, 7Ch, DFh, FEh, FFh) |
+| CONFIRMED | 249 |
+| PARTIAL | 7 (44h, 4Ch, 6Ch, 7Ch, DFh, FEh, FFh) |
 | UNRESOLVED | 0 |
 
 ---
@@ -342,13 +342,16 @@ ADD/SUB r2 forms. Both r2,r1' and r2,r2' are listed on the same opcode row (p.22
 CONFIRMED. r1,r1' form confirmed as a single independent row (p.227 enlarged direct read). Second byte=0r 0r'.
 
 **56h / 5Eh:**
-Operand notation for MVL external-memory variants differs between p.230 and p.231. p.231 enlarged confirms existence of both forms. bytes and cycles confirmed. Final operand notation kept PARTIAL pending resolution of p.230/p.231 discrepancy.
+CONFIRMED (v6_C). operand order confirmed from p.230 enlarged photo direct read: 56h operands=m, n; 5Eh operands=n, m. Cross-checked with independent analysis, results agree.
 
 **6Ch / 7Ch:**
 INC/DEC r — second byte form "0000 0r" confirmed from p.228 enlarged direct read. Lower 3 bits select register per register table. Base opcode confirmed; full per-register expansion not listed in this table, hence PARTIAL.
 
-**DFh / FEh / FFh:**
-opcode / mnemonic / bytes are confirmed. cycles cannot be safely read from the source photographs.
+**DFh:**
+opcode / mnemonic / bytes confirmed. p.230 instruction table shows cycles as "〃" (ditto mark), referring to HALT (DEh) "通過時2" on the row immediately above. p.102 individual instruction page has no cycles entry. Ditto inheritance is likely but requires interpretive step; PARTIAL maintained.
+
+**FEh / FFh:**
+opcode / mnemonic / bytes confirmed. p.102/p.103 individual instruction pages have no cycles entry. cycles not found in instruction table.
 
 ---
 
