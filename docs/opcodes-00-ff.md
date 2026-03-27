@@ -1,6 +1,6 @@
 # SC62015 Opcode Table 00h–FFh
 
-**Version:** v4_C  
+**Version:** v5_C  
 **Primary source:** *PC-E650/PC-U6000 活用研究* (PC-E650/PC-U6000 Practical Guide), I/O Editorial Department, Kogakusha, November 25, 1995, ISBN 4-87593-206-5
 
 ---
@@ -117,17 +117,17 @@
 | 41h | CONFIRMED | ADD | (m), n | 3 | 4 | p.84 "41(49) m n", p.227 "ADD (m),n = 41h" |
 | 42h | CONFIRMED | ADD | A, (n) | 2 | 4 | p.84 "42(4A) n", p.227 "ADD A,(n) = 42h" |
 | 43h | CONFIRMED | ADD | (n), A | 2 | 4 | p.84 "43(4B) n", p.227 "ADD (n),A = 43h" |
-| 44h | PARTIAL | ADD | r2, r1' | 2 | 5 | p.227 "44h / bytes:2 / cycles:5". Register class notation kept conservative |
+| 44h | PARTIAL | ADD | r2, r1' / r2, r2' | 2 | 5 | p.227 enlarged: r2,r1' and r2,r2' listed on same 44h row. cycles=5. Second byte=0r 0r'. Interpretation of r2,r2' form second byte "00" unconfirmed |
 | 45h | CONFIRMED | ADD | r3, r' | 2 | 7 | p.84 "45(4D) r3r", p.227 "ADD r3,r' = 45h" |
-| 46h | PARTIAL | ADD | r1', r1' | 2 | 3 | p.227 "46h / bytes:2 / cycles:3". Register class notation kept conservative |
+| 46h | CONFIRMED | ADD | r1, r1' | 2 | 3 | p.227 enlarged direct read: "ADD r1,r1' / 0100 0110 = 46h / bytes:2 / cycles:3". Second byte=0r 0r' |
 | 47h | CONFIRMED | PMDF | (m), n | 3 | 4 | p.88, p.230 "47h / bytes:3 / cycles:4" |
 | 48h | CONFIRMED | SUB | A, n | 2 | 3 | p.84 "40(48)" — parenthesized value = SUB, p.227 "SUB A,n = 48h" |
 | 49h | CONFIRMED | SUB | (m), n | 3 | 4 | p.227 "SUB (m),n = 49h" |
 | 4Ah | CONFIRMED | SUB | A, (n) | 2 | 4 | p.227 "SUB A,(n) = 4Ah" |
 | 4Bh | CONFIRMED | SUB | (n), A | 2 | 4 | p.227 "SUB (n),A = 4Bh" |
-| 4Ch | PARTIAL | SUB | r2, r1' | 2 | 5 | p.227 "4Ch / bytes:2 / cycles:5". Register class notation kept conservative |
+| 4Ch | PARTIAL | SUB | r2, r1' / r2, r2' | 2 | 5 | p.227 enlarged: r2,r1' and r2,r2' listed on same 4Ch row. cycles=5. Second byte=0r 0r'. Interpretation of r2,r2' form second byte "00" unconfirmed |
 | 4Dh | CONFIRMED | SUB | r3, r' | 2 | 7 | p.84 "45(4D)" — parenthesized value = SUB, p.227 "SUB r3,r' = 4Dh" |
-| 4Eh | PARTIAL | SUB | r1', r1' | 2 | 3 | p.227 "4Eh / bytes:2 / cycles:3". Register class notation kept conservative |
+| 4Eh | CONFIRMED | SUB | r1, r1' | 2 | 3 | p.227 enlarged direct read: "SUB r1,r1' / 0100 1110 = 4Eh / bytes:2 / cycles:3". Second byte=0r 0r' |
 | 4Fh | CONFIRMED | PUSHS | F | 1 | 3 | p.229 "0100 1111 = 4Fh / bytes:1 / cycles:3". (S-1)←C,Z S←S-1 |
 | 50h | CONFIRMED | ADC | A, n | 2 | 3 | p.85, p.227 "50h / bytes:2 / cycles:3" |
 | 51h | CONFIRMED | ADC | (m), n | 3 | 4 | p.85, p.227 "51h" |
@@ -135,7 +135,7 @@
 | 53h | CONFIRMED | ADC | (n), A | 2 | 4 | p.85, p.227 "53h" |
 | 54h | CONFIRMED | ADCL | (m), (n) | 3 | 5+2×I | p.86, p.228 "0101 0100 = 54h / bytes:3 / cycles:5+2×I" |
 | 55h | CONFIRMED | ADCL | (n), A | 2 | 4+I | p.86, p.228 "55h / bytes:2 / cycles:4+I" |
-| 56h | PARTIAL | MVL | (m), [r3±n] | 4 | 5+2×I | p.230 "56h / bytes:4 / cycles:5+2×I". Operand notation kept conservative — discrepancy between p.230 and p.231 |
+| 56h | PARTIAL | MVL | (m), [r3±n] | 4 | 5+2×I | p.230 "56h / bytes:4 / cycles:5+2×I". p.231 enlarged confirms MVL (m),(r3+n) form exists. Discrepancy between p.230 and p.231 notation unresolved |
 | 57h | CONFIRMED | PMDF | (n), A | 2 | 4 | p.88, p.230 "57h / bytes:2 / cycles:4" |
 | 58h | CONFIRMED | SBC | A, n | 2 | 3 | p.85, p.227 "58h / bytes:2 / cycles:3" |
 | 59h | CONFIRMED | SBC | (m), n | 3 | 4 | p.85, p.227 "59h" |
@@ -143,7 +143,7 @@
 | 5Bh | CONFIRMED | SBC | (n), A | 2 | 4 | p.227 "5Bh" |
 | 5Ch | CONFIRMED | SBCL | (m), (n) | 3 | 5+2×I | p.86, p.228 "5Ch / bytes:3 / cycles:5+2×I" |
 | 5Dh | CONFIRMED | SBCL | (n), A | 2 | 4+I | p.86, p.228 "5Dh / bytes:2 / cycles:4+I" |
-| 5Eh | PARTIAL | MVL | [r3±m], (n) | 4 | 5+2×I | p.230 "5Eh / bytes:4 / cycles:5+2×I". Operand notation kept conservative |
+| 5Eh | PARTIAL | MVL | [r3±m], (n) | 4 | 5+2×I | p.230 "5Eh / bytes:4 / cycles:5+2×I". p.231 enlarged confirms MVL [r3++],(n) form exists. Discrepancy between p.230 and p.231 notation unresolved |
 | 5Fh | CONFIRMED | POPS | F | 1 | 2 | p.230 "0101 1111 = 5Fh / bytes:1 / cycles:2". C,Z←(S) S←S+1 |
 | 60h | CONFIRMED | CMP | A, n | 2 | 3 | p.89, p.229 "0110 0000 = 60h / bytes:2 / cycles:3" |
 | 61h | CONFIRMED | CMP | (m), n | 3 | 4 | p.89, p.229 "61h / bytes:3 / cycles:4" |
@@ -157,7 +157,7 @@
 | 69h | CONFIRMED | XOR | (m), n | 3 | 4 | p.90, p.228 "69h" |
 | 6Ah | CONFIRMED | XOR | [klm], n | 5 | 7 | p.90, p.228 "6Ah / bytes:5 / cycles:7" |
 | 6Bh | CONFIRMED | XOR | (n), A | 2 | 4 | p.90, p.228 "6Bh" |
-| 6Ch | PARTIAL | INC | r | 2 | 3 | p.88, p.228 "0110 1100 / 0000 0r / bytes:2 / cycles:3". Register selection depends on second byte |
+| 6Ch | PARTIAL | INC | r | 2 | 3 | p.228 enlarged direct read: "0110 1100 = 6Ch / bytes:2 / cycles:3". Second byte=0000 0r (lower 3 bits select register per register table). Full per-register expansion not listed in this table |
 | 6Dh | CONFIRMED | INC | (m) | 2 | 3 | p.228 "0110 1101 = 6Dh / bytes:2 / cycles:3" |
 | 6Eh | CONFIRMED | XOR | (m), (n) | 3 | 6 | p.90, p.228 "6Eh / bytes:3 / cycles:6" |
 | 6Fh | CONFIRMED | XOR | A, (n) | 2 | 4 | p.90, p.228 "6Fh" |
@@ -173,7 +173,7 @@
 | 79h | CONFIRMED | OR | (m), n | 3 | 4 | p.90, p.228 "79h" |
 | 7Ah | CONFIRMED | OR | [klm], n | 5 | 7 | p.90, p.228 "7Ah / bytes:5 / cycles:7" |
 | 7Bh | CONFIRMED | OR | (n), A | 2 | 4 | p.90, p.228 "7Bh" |
-| 7Ch | PARTIAL | DEC | r | 2 | 3 | p.88, p.228 "0111 1100 / 0000 0r / bytes:2 / cycles:3". Register selection depends on second byte |
+| 7Ch | PARTIAL | DEC | r | 2 | 3 | p.228 enlarged direct read: "0111 1100 = 7Ch / bytes:2 / cycles:3". Second byte=0000 0r (lower 3 bits select register per register table). Full per-register expansion not listed in this table |
 | 7Dh | CONFIRMED | DEC | (m) | 2 | 3 | p.228 "0111 1101 = 7Dh / bytes:2 / cycles:3" |
 | 7Eh | CONFIRMED | OR | (m), (n) | 3 | 6 | p.90, p.228 "7Eh / bytes:3 / cycles:6" |
 | 7Fh | CONFIRMED | OR | A, (n) | 2 | 4 | p.90, p.228 "7Fh" |
@@ -327,22 +327,25 @@
 | Category | Count |
 |----------|-------|
 | Total entries | 256 (00h–FFh, all) |
-| CONFIRMED | 245 |
-| PARTIAL | 11 (44h, 46h, 4Ch, 4Eh, 56h, 5Eh, 6Ch, 7Ch, DFh, FEh, FFh) |
+| CONFIRMED | 247 |
+| PARTIAL | 9 (44h, 4Ch, 56h, 5Eh, 6Ch, 7Ch, DFh, FEh, FFh) |
 | UNRESOLVED | 0 |
 
 ---
 
 ## PARTIAL Details
 
-**44h / 46h / 4Ch / 4Eh:**
-Register class distinction (r1/r2) is not sufficiently supported by the source. opcode / bytes / cycles are confirmed from p.227 direct read.
+**44h / 4Ch:**
+ADD/SUB r2 forms. Both r2,r1' and r2,r2' are listed on the same opcode row (p.227 enlarged direct read). opcode / bytes / cycles confirmed. Interpretation of the r2,r2' form second byte "00" unconfirmed — PARTIAL maintained.
+
+**46h / 4Eh:**
+CONFIRMED. r1,r1' form confirmed as a single independent row (p.227 enlarged direct read). Second byte=0r 0r'.
 
 **56h / 5Eh:**
-Operand notation for MVL external-memory variants differs between p.230 and p.231. Existence, bytes, and cycles are confirmed. Final operand notation kept PARTIAL.
+Operand notation for MVL external-memory variants differs between p.230 and p.231. p.231 enlarged confirms existence of both forms. bytes and cycles confirmed. Final operand notation kept PARTIAL pending resolution of p.230/p.231 discrepancy.
 
 **6Ch / 7Ch:**
-INC/DEC r — second byte selects register ("0000 0 r" form). Base opcode is confirmed; full per-register expansion not listed in this table, hence PARTIAL.
+INC/DEC r — second byte form "0000 0r" confirmed from p.228 enlarged direct read. Lower 3 bits select register per register table. Base opcode confirmed; full per-register expansion not listed in this table, hence PARTIAL.
 
 **DFh / FEh / FFh:**
 opcode / mnemonic / bytes are confirmed. cycles cannot be safely read from the source photographs.
