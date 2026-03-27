@@ -16,6 +16,10 @@ https://toro.d.dooo.jp/sle500.html
 Program used in this example: COMPO-System by TORO / Yoshikazu Takahashi.
 Copyright (c) 1997-2026 TORO / Yoshikazu Takahashi.
 
+For practical software setup and transfer guidance for the SHARP PC-E500 series, see also:
+
+- [PC-E500 Software Guide](https://github.com/gikonekos/pc-e500-software-guide)
+
 ---
 
 ## Status
