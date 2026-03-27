@@ -1,6 +1,6 @@
 # SC62015 OPコード完全表 00h〜FFh
 
-**バージョン：** v4_C  
+**バージョン：** v5_C  
 **一次資料：** 「PC-E650・PC-U6000 活用研究」I/O 編集部 著、工学社、1995年11月25日、ISBN 4-87593-206-5
 
 ---
@@ -117,17 +117,17 @@
 | 41h | CONFIRMED | ADD | (m), n | 3 | 4 | p.84「41(49) m n」, p.227「ADD (m),n = 41h」 |
 | 42h | CONFIRMED | ADD | A, (n) | 2 | 4 | p.84「42(4A) n」, p.227「ADD A,(n) = 42h」 |
 | 43h | CONFIRMED | ADD | (n), A | 2 | 4 | p.84「43(4B) n」, p.227「ADD (n),A = 43h」 |
-| 44h | PARTIAL | ADD | r2, r1' | 2 | 5 | p.227「44h / bytes:2 / cycles:5」。レジスタクラス表記は慎重維持 |
+| 44h | PARTIAL | ADD | r2, r1' / r2, r2' | 2 | 5 | p.227拡大直読「r2,r1'とr2,r2'が同44h行に並列。cycles=5。第2バイト=0r 0r'」。r2,r2'形の第2バイト「00」の解釈未確定 |
 | 45h | CONFIRMED | ADD | r3, r' | 2 | 7 | p.84「45(4D) r3r」, p.227「ADD r3,r' = 45h」 |
-| 46h | PARTIAL | ADD | r1', r1' | 2 | 3 | p.227「46h / bytes:2 / cycles:3」。レジスタクラス表記は慎重維持 |
+| 46h | CONFIRMED | ADD | r1, r1' | 2 | 3 | p.227拡大直読「ADD r1,r1' / 0100 0110 = 46h / bytes:2 / cycles:3」。第2バイト=0r 0r' |
 | 47h | CONFIRMED | PMDF | (m), n | 3 | 4 | p.88, p.230「47h / bytes:3 / cycles:4」 |
 | 48h | CONFIRMED | SUB | A, n | 2 | 3 | p.84「40(48)」括弧内=SUB, p.227「SUB A,n = 48h」 |
 | 49h | CONFIRMED | SUB | (m), n | 3 | 4 | p.227「SUB (m),n = 49h」 |
 | 4Ah | CONFIRMED | SUB | A, (n) | 2 | 4 | p.227「SUB A,(n) = 4Ah」 |
 | 4Bh | CONFIRMED | SUB | (n), A | 2 | 4 | p.227「SUB (n),A = 4Bh」 |
-| 4Ch | PARTIAL | SUB | r2, r1' | 2 | 5 | p.227「4Ch / bytes:2 / cycles:5」。レジスタクラス表記は慎重維持 |
+| 4Ch | PARTIAL | SUB | r2, r1' / r2, r2' | 2 | 5 | p.227拡大直読「r2,r1'とr2,r2'が同4Ch行に並列。cycles=5。第2バイト=0r 0r'」。r2,r2'形の第2バイト「00」の解釈未確定 |
 | 4Dh | CONFIRMED | SUB | r3, r' | 2 | 7 | p.84「45(4D)」括弧内=SUB, p.227「SUB r3,r' = 4Dh」 |
-| 4Eh | PARTIAL | SUB | r1', r1' | 2 | 3 | p.227「4Eh / bytes:2 / cycles:3」。レジスタクラス表記は慎重維持 |
+| 4Eh | CONFIRMED | SUB | r1, r1' | 2 | 3 | p.227拡大直読「SUB r1,r1' / 0100 1110 = 4Eh / bytes:2 / cycles:3」。第2バイト=0r 0r' |
 | 4Fh | CONFIRMED | PUSHS | F | 1 | 3 | p.229「0100 1111 = 4Fh / bytes:1 / cycles:3」。(S-1)←C,Z S←S-1 |
 | 50h | CONFIRMED | ADC | A, n | 2 | 3 | p.85, p.227「50h / bytes:2 / cycles:3」 |
 | 51h | CONFIRMED | ADC | (m), n | 3 | 4 | p.85, p.227「51h」 |
@@ -135,7 +135,7 @@
 | 53h | CONFIRMED | ADC | (n), A | 2 | 4 | p.85, p.227「53h」 |
 | 54h | CONFIRMED | ADCL | (m), (n) | 3 | 5+2×I | p.86, p.228「0101 0100 = 54h / bytes:3 / cycles:5+2×I」 |
 | 55h | CONFIRMED | ADCL | (n), A | 2 | 4+I | p.86, p.228「55h / bytes:2 / cycles:4+I」 |
-| 56h | PARTIAL | MVL | (m), [r3±n] | 4 | 5+2×I | p.230「56h / bytes:4 / cycles:5+2×I」。operand記法は p.230 と p.231 間で慎重維持 |
+| 56h | PARTIAL | MVL | (m), [r3±n] | 4 | 5+2×I | p.230「56h / bytes:4 / cycles:5+2×I」。p.231拡大で MVL (m),(r3+n) 形の存在を確認。p.230 と p.231 間の表記差は未解消 |
 | 57h | CONFIRMED | PMDF | (n), A | 2 | 4 | p.88, p.230「57h / bytes:2 / cycles:4」 |
 | 58h | CONFIRMED | SBC | A, n | 2 | 3 | p.85, p.227「58h / bytes:2 / cycles:3」 |
 | 59h | CONFIRMED | SBC | (m), n | 3 | 4 | p.85, p.227「59h」 |
@@ -143,7 +143,7 @@
 | 5Bh | CONFIRMED | SBC | (n), A | 2 | 4 | p.227「5Bh」 |
 | 5Ch | CONFIRMED | SBCL | (m), (n) | 3 | 5+2×I | p.86, p.228「5Ch / bytes:3 / cycles:5+2×I」 |
 | 5Dh | CONFIRMED | SBCL | (n), A | 2 | 4+I | p.86, p.228「5Dh / bytes:2 / cycles:4+I」 |
-| 5Eh | PARTIAL | MVL | [r3±m], (n) | 4 | 5+2×I | p.230「5Eh / bytes:4 / cycles:5+2×I」。operand記法慎重維持 |
+| 5Eh | PARTIAL | MVL | [r3±m], (n) | 4 | 5+2×I | p.230「5Eh / bytes:4 / cycles:5+2×I」。p.231拡大で MVL [r3++],(n) 形の存在を確認。p.230 と p.231 間の表記差は未解消 |
 | 5Fh | CONFIRMED | POPS | F | 1 | 2 | p.230「0101 1111 = 5Fh / bytes:1 / cycles:2」。C,Z←(S) S←S+1 |
 | 60h | CONFIRMED | CMP | A, n | 2 | 3 | p.89, p.229「0110 0000 = 60h / bytes:2 / cycles:3」 |
 | 61h | CONFIRMED | CMP | (m), n | 3 | 4 | p.89, p.229「61h / bytes:3 / cycles:4」 |
@@ -157,7 +157,7 @@
 | 69h | CONFIRMED | XOR | (m), n | 3 | 4 | p.90, p.228「69h」 |
 | 6Ah | CONFIRMED | XOR | [klm], n | 5 | 7 | p.90, p.228「6Ah / bytes:5 / cycles:7」 |
 | 6Bh | CONFIRMED | XOR | (n), A | 2 | 4 | p.90, p.228「6Bh」 |
-| 6Ch | PARTIAL | INC | r | 2 | 3 | p.88, p.228「0110 1100 / 0000 0r / bytes:2 / cycles:3」。r展開は第2バイト依存 |
+| 6Ch | PARTIAL | INC | r | 2 | 3 | p.228拡大直読「0110 1100 = 6Ch / bytes:2 / cycles:3」。第2バイト=0000 0r（下位3ビットでレジスタ選択）。r展開を明示表に完全展開していないため PARTIAL |
 | 6Dh | CONFIRMED | INC | (m) | 2 | 3 | p.228「0110 1101 = 6Dh / bytes:2 / cycles:3」 |
 | 6Eh | CONFIRMED | XOR | (m), (n) | 3 | 6 | p.90, p.228「6Eh / bytes:3 / cycles:6」 |
 | 6Fh | CONFIRMED | XOR | A, (n) | 2 | 4 | p.90, p.228「6Fh」 |
@@ -173,7 +173,7 @@
 | 79h | CONFIRMED | OR | (m), n | 3 | 4 | p.90, p.228「79h」 |
 | 7Ah | CONFIRMED | OR | [klm], n | 5 | 7 | p.90, p.228「7Ah / bytes:5 / cycles:7」 |
 | 7Bh | CONFIRMED | OR | (n), A | 2 | 4 | p.90, p.228「7Bh」 |
-| 7Ch | PARTIAL | DEC | r | 2 | 3 | p.88, p.228「0111 1100 / 0000 0r / bytes:2 / cycles:3」。r展開は第2バイト依存 |
+| 7Ch | PARTIAL | DEC | r | 2 | 3 | p.228拡大直読「0111 1100 = 7Ch / bytes:2 / cycles:3」。第2バイト=0000 0r（下位3ビットでレジスタ選択）。r展開を明示表に完全展開していないため PARTIAL |
 | 7Dh | CONFIRMED | DEC | (m) | 2 | 3 | p.228「0111 1101 = 7Dh / bytes:2 / cycles:3」 |
 | 7Eh | CONFIRMED | OR | (m), (n) | 3 | 6 | p.90, p.228「7Eh / bytes:3 / cycles:6」 |
 | 7Fh | CONFIRMED | OR | A, (n) | 2 | 4 | p.90, p.228「7Fh」 |
@@ -327,22 +327,25 @@
 | 区分 | 件数 |
 |------|------|
 | 総エントリ数 | 256（00h–FFh 全件） |
-| CONFIRMED | 245 |
-| PARTIAL | 11（44h, 46h, 4Ch, 4Eh, 56h, 5Eh, 6Ch, 7Ch, DFh, FEh, FFh） |
+| CONFIRMED | 247 |
+| PARTIAL | 9（44h, 4Ch, 56h, 5Eh, 6Ch, 7Ch, DFh, FEh, FFh） |
 | UNRESOLVED | 0 |
 
 ---
 
 ## PARTIAL 詳細
 
-**44h / 46h / 4Ch / 4Eh：**
-レジスタクラス（r1/r2 の区別）表記の根拠が弱い。opcode / bytes / cycles は p.227 直読で確定。
+**44h / 4Ch：**
+ADD/SUB r2 系。r2,r1' と r2,r2' の両形が同じ opcode 行に並列記載（p.227拡大直読）。opcode / bytes / cycles は確定。r2,r2' 形の第2バイト「00」の解釈未確定のため PARTIAL 維持。
+
+**46h / 4Eh：**
+CONFIRMED 済み。r1,r1' 形として単独行で確認（p.227拡大直読）。第2バイト=0r 0r'。
 
 **56h / 5Eh：**
-MVL の外部メモリ系 operand 記法について p.230 と p.231 間に表記差。存在・bytes・cycles は確定。最終 operand 記法を PARTIAL 維持。
+MVL の外部メモリ系 operand 記法について p.230 と p.231 間に表記差。p.231拡大で両形の存在を確認。bytes・cycles は確定。p.230/p.231 間の表記差が未解消のため最終 operand 記法を PARTIAL 維持。
 
 **6Ch / 7Ch：**
-INC/DEC r の第2バイト「0000 0 r」形式。基本 opcode は確定。r 展開を明示表に完全展開していないため PARTIAL。
+INC/DEC r の第2バイト「0000 0r」形式を p.228拡大直読で確認。下位3ビットがレジスタ選択表に従いレジスタを選択。基本 opcode は確定。r 展開を明示表に完全展開していないため PARTIAL 維持。
 
 **DFh / FEh / FFh：**
 opcode / mnemonic / bytes は確認済み。cycles は原資料写真から安全に読めないため PARTIAL。
